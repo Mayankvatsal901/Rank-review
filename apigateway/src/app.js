@@ -19,6 +19,15 @@ app.use(
         target: "http://localhost:5001",
         changeOrigin: true,
     })
+    
+);
+app.use(
+    "/api/review",
+    createProxyMiddleware({
+        target: "http://localhost:5002",
+        changeOrigin: true,
+    })
+    
 );
 
 const PORT = process.env.PORT || 5000;
