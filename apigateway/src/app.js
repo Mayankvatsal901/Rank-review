@@ -29,6 +29,13 @@ app.use(
     })
     
 );
+app.use(
+    "/api/ai",
+    createProxyMiddleware({
+        target: "http://localhost:5003",
+        changeOrigin: true,
+    })
+);
 
 const PORT = process.env.PORT || 5000;
 
