@@ -183,7 +183,7 @@ const getfeature=async(req,res)=>{
     const information=await Business.findOne({slug});
 
     if(!information){
-       return res.status(500).json({
+       return res.status(404).json({
         status: false,
         message: "Business not registered"
       });

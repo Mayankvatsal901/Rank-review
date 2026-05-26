@@ -24,7 +24,7 @@ Review: ${review}
     const response = await axios.post(
         "https://router.huggingface.co/v1/chat/completions",
         {
-            model:"meta-llama/Llama-3.1-8B-Instruct",
+            model:"Qwen/Qwen2.5-72B-Instruct",
 
             messages: [
                 {
