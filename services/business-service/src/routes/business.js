@@ -7,6 +7,6 @@ const authBusiness=require('../config/authbusiness')
 router.post("/register",RegisterBusiness);
 router.post("/update",authBusiness,UpdateBusiness)
 router.post("/login",loginBusiness)
-router.get("/getfeature:slug",getfeature)
+router.get("/getfeature/:slug",getfeature)
 
 module.exports=router
