@@ -177,8 +177,39 @@ const loginBusiness = async (req, res) => {
   }
 };
 
+const getfeature=async(req,res)=>{
+  try {
+    const{slug}=req.params;
+    const information=await Business.findOne({slug});
+
+    if(!information){
+       return res.status(500).json({
+        status: false,
+        message: "Business not registered"
+      });
+
+    }
+    res.status(200).json({
+      sucess:true,
+      information:information
+    })
+    
+  } catch (error) {
+
+      return res.status(500).json({
+        status: false,
+        message:error.message
+      });
+
+
+    
+  }
+  
+}
+
 module.exports={
     RegisterBusiness,
     UpdateBusiness,
-    loginBusiness
+    loginBusiness,
+    getfeature,
 }
