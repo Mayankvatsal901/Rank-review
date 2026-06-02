@@ -13,6 +13,7 @@ app.get("/", (req, res) => {
     res.send("AI Service Running");
 });
 
+
 app.use("/", AIRouter);
 
 const PORT = process.env.PORT || 5003;
