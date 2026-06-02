@@ -1,6 +1,7 @@
 const {generateReview} = require("../service/huggingface");
 
 const GenerateReview = async (req, res) => {
+       console.log("GENERATE HIT");
 
     try {
 
@@ -24,11 +25,13 @@ const GenerateReview = async (req, res) => {
                 location,
                 sentiment
             );
+            console.log(optimizedReview)
 
         return res.status(200).json({
             success: true,
             optimizedReview
         });
+        
 
     } catch (error) {
 

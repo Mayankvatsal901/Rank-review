@@ -14,6 +14,7 @@ app.get("/", (req, res) => {
     res.send("Api gateway running");
 });
 
+
 app.use(
     "/api/business",
     createProxyMiddleware({
@@ -22,6 +23,7 @@ app.use(
     })
     
 );
+
 app.use(
     "/api/review",
     createProxyMiddleware({
@@ -30,12 +32,24 @@ app.use(
     })
     
 );
+
 app.use(
     "/api/ai",
     createProxyMiddleware({
         target: "http://localhost:5003",
         changeOrigin: true,
+
+        
     })
+);
+
+app.use(
+    "/api",
+    createProxyMiddleware({
+        target: "http://localhost:5001",
+        changeOrigin: true,
+    })
+    
 );
 
 const PORT = process.env.PORT || 5000;

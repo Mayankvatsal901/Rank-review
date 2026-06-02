@@ -34,9 +34,11 @@ const RegisterBusiness = async (req, res) => {
         }
 
         // CHECK EXISTING BUSINESS
+        if(slug!=null){
         const existingBusiness = await Business.findOne({
             $or: [{ slug }, { email }]
         });
+      }
 
         if (existingBusiness) {
 
@@ -87,38 +89,59 @@ const RegisterBusiness = async (req, res) => {
 } 
 
 
-const UpdateBusiness=async (req,res)=>{
- try {
-       const{name,slug,location,googleLink,email}=req.body;
-    const existingBusiness=await Business.findOne({slug});
-    if(!existingBusiness){
-        return res.status(400).json({
-      status:false,
-      message:"Business not exists"
-   })
-    }
-    const updateBusiness=await Business.findOneAndUpdate(
-        {slug},
-        {name,email,location,googleLink},
-        {new:true}
 
-    )
 
-     return res.status(200).json({
-      status: true,
+const UpdateBusiness = async (req, res) => {
+
+  try {
+
+    const businessId = req.business.id;
+
+    const {
+      name,
+      slug,
+      location,
+      googleLink,
+      email
+    } = req.body;
+
+    const updateBusiness =
+      await Business.findByIdAndUpdate(
+
+        businessId,
+
+        {
+          name,
+          slug,
+          location,
+          googleLink,
+          email
+        },
+
+        {returnDocument:"after"},
+
+      );
+
+    return res.status(200).json({
+
+      success: true,
       message: "Business updated successfully",
-      data: updateBusiness
-    });
-    
- } catch (error) {
-      res.status(500).json({
-        status:false,
-        message:error.message,
-    })
+      business: updateBusiness
 
-    
- }
-}
+    });
+
+  } catch (error) {
+
+    return res.status(500).json({
+
+      success: false,
+      message: error.message
+
+    });
+
+  }
+
+};
 
 
 
@@ -207,9 +230,136 @@ const getfeature=async(req,res)=>{
   
 }
 
+const CheckBusinessAuthorize = async (req, res) => {
+
+  try {
+
+    const businessId = req.business.id;
+
+    const business =
+      await Business.findById(businessId);
+
+    if (!business) {
+
+      return res.status(404).json({
+
+        success: false,
+        message: "Business not found"
+
+      });
+
+    }
+
+    return res.status(200).json({
+
+      success: true,
+      business
+
+    });
+
+  } catch (error) {
+
+    return res.status(500).json({
+
+      success: false,
+      message: error.message
+
+    });
+
+  }
+
+};
+const GetBusinessesByLocation = async (req, res) => {
+
+    try {
+
+        const { location } = req.params;
+
+        const businesses = await Business.find({
+
+            location: {
+                $regex: new RegExp(location, "i")
+            }
+
+        }).select(
+            "_id name location"
+        );
+
+        res.status(200).json({
+
+            success: true,
+
+            businesses
+
+        });
+
+    }
+    catch (error) {
+
+        res.status(500).json({
+
+            success: false,
+
+            message: error.message
+
+        });
+
+    }
+
+};
+
+const GoogleCallback =
+async (req,res)=>{
+
+try{
+
+const business =
+req.user;
+
+const token =
+jwt.sign(
+
+{
+id:business._id,
+email:business.email
+},
+
+process.env.JWT_SECRET,
+
+{
+expiresIn:"7d"
+}
+
+);
+
+res.redirect(
+
+`http://localhost:5173/google-success?token=${token}`
+
+);
+
+}
+catch(error){
+
+res.status(500).json({
+
+status:false,
+message:error.message
+
+});
+
+}
+
+};
+
 module.exports={
     RegisterBusiness,
     UpdateBusiness,
     loginBusiness,
     getfeature,
+    CheckBusinessAuthorize,
+    GetBusinessesByLocation,
+    GoogleCallback
+
+
 }
