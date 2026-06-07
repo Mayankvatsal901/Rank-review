@@ -8,7 +8,7 @@ const AppContextProvider = ({ children }) => {
   const [token, setToken] = useState(
     localStorage.getItem("token") || ""
   );
-  const hello;
+  
 
   const [business, setBusiness] = useState(null);
 
