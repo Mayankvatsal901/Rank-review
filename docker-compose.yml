@@ -1,0 +1,52 @@
+version: "3.9"
+
+services:
+
+  business-service:
+    build:
+      context: ./services/business-service
+    container_name: business-service
+    env_file:
+      - ./services/business-service/.env
+    ports:
+      - "5001:5001"
+
+  review-service:
+    build:
+      context: ./services/review-service
+    container_name: review-service
+    env_file:
+      - ./services/review-service/.env
+    ports:
+      - "5002:5002"
+
+  ai-service:
+    build:
+      context: ./services/ai-service
+    container_name: ai-service
+    env_file:
+      - ./services/ai-service/.env
+    ports:
+      - "5003:5003"
+
+  apigateway:
+    build:
+      context: ./apigateway
+    container_name: apigateway
+    env_file:
+      - ./apigateway/.env
+    ports:
+      - "5000:5000"
+    depends_on:
+      - business-service
+      - review-service
+      - ai-service
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - apigateway
