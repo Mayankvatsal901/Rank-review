@@ -5,7 +5,10 @@ const authBusiness=require('../config/authbusiness')
 const passport =require("passport");
 
 
-router.post("/register",RegisterBusiness);
+router.post("/register",(req,res,next)=>{
+    console.log("REGISTER HIT");
+    next();
+},RegisterBusiness);
 router.put("/update",authBusiness,UpdateBusiness)
 router.post("/login",loginBusiness)
 router.get("/getfeature/:slug",getfeature)
