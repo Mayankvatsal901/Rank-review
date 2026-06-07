@@ -334,7 +334,7 @@ expiresIn:"7d"
 
 res.redirect(
 
-`http://localhost:5173/google-success?token=${token}`
+`${process.env.FRONTEND_URL}/google-success?token=${token}`
 
 );
 
