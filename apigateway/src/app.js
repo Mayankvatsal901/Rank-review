@@ -18,16 +18,18 @@ app.get("/", (req, res) => {
 app.use(
     "/api/business",
     createProxyMiddleware({
-        target: "http://localhost:5001",
+        target: "http://business-service:5001",
         changeOrigin: true,
+        logLevel: "debug"
     })
-    
 );
+
+
 
 app.use(
     "/api/review",
     createProxyMiddleware({
-        target: "http://localhost:5002",
+        target: "http://review-service:5002",
         changeOrigin: true,
     })
     
@@ -36,7 +38,7 @@ app.use(
 app.use(
     "/api/ai",
     createProxyMiddleware({
-        target: "http://localhost:5003",
+        target: "http://ai-service:5003",
         changeOrigin: true,
 
         
@@ -46,7 +48,7 @@ app.use(
 app.use(
     "/api",
     createProxyMiddleware({
-        target: "http://localhost:5001",
+        target: "http://business-service:5001",
         changeOrigin: true,
     })
     

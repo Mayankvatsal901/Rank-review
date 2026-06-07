@@ -8,6 +8,6 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 5002
+EXPOSE 5173
 
-CMD ["node", "src/app.js"]
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
