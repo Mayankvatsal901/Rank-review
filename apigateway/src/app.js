@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
 app.use(
     "/api/business",
     createProxyMiddleware({
-        target: "http://business-service:5001",
+        target: process.env.BUSINESS_SERVICE_URL,
         changeOrigin: true,
         logLevel: "debug"
     })
@@ -29,7 +29,7 @@ app.use(
 app.use(
     "/api/review",
     createProxyMiddleware({
-        target: "http://review-service:5002",
+        target: process.env.REVIEW_SERVICE_URL,
         changeOrigin: true,
     })
     
@@ -38,7 +38,7 @@ app.use(
 app.use(
     "/api/ai",
     createProxyMiddleware({
-        target: "http://ai-service:5003",
+        target: process.env.AI_SERVICE_URL,
         changeOrigin: true,
 
         
