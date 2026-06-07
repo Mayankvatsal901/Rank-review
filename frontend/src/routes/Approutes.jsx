@@ -37,9 +37,10 @@ import CompetitorAI from "../business/platform/CompetitorAI";
 import KeywordsAI from "../business/platform/KeywordsAI";
 import QRGenerator from "../business/platform/QRGenerator";
 import Pricing from "../business/pricing/Pricing";
-import Contact from "../business/contact/Contact";
+import Contact from "../business/contact/contact";
 import Location from "../business/dashboard/location";
 import GoogleSuccess from "../business/auth/GoogleSuccess";
+import ScrollToTop from "../business/components/ScrollToTop";
 
 
 // PUBLIC LAYOUT
@@ -50,6 +51,7 @@ function AppRoutes() {
   return (
 
     <BrowserRouter>
+     <ScrollToTop />
 
       <Routes>
 
