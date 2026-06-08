@@ -48,7 +48,7 @@ app.use(
 app.use(
     "/api",
     createProxyMiddleware({
-        target: "http://business-service:5001",
+        target: process.env.BUSINESS_SERVICE_URL,
         changeOrigin: true,
     })
     
