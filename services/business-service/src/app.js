@@ -10,6 +10,7 @@ const connect = require("./config/db");
 // Load Google Strategy
 require("./config/passport");
 
+
 const BusinessRouter = require("./routes/business");
 const Payment = require("./routes/payment");
 
@@ -29,6 +30,10 @@ app.use(
         saveUninitialized: false
     })
 );
+console.log("BUSINESS ROUTES LOADED");
+app.post("/test", (req, res) => {
+  res.json({ message: "test works" });
+});
 
 // Passport Middleware
 app.use(passport.initialize());
