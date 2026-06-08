@@ -48,15 +48,15 @@ app.use(
     })
 );
 
-app.use(
-    "/api",
-    createProxyMiddleware({
-        target: process.env.BUSINESS_SERVICE_URL,
-        pathRewrite: { "^/api": "" },
-        changeOrigin: true,
-    })
+// app.use(
+//     "/api",
+//     createProxyMiddleware({
+//         target: process.env.BUSINESS_SERVICE_URL,
+//         pathRewrite: { "^/api": "" },
+//         changeOrigin: true,
+//     })
     
-);
+// );
 
 const PORT = process.env.PORT || 5000;
 
