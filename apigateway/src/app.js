@@ -20,6 +20,7 @@ app.use(
     createProxyMiddleware({
         target: process.env.BUSINESS_SERVICE_URL,
         changeOrigin: true,
+        pathRewrite: { "^/api/business": "" },
         logLevel: "debug"
     })
 );
@@ -30,6 +31,7 @@ app.use(
     "/api/review",
     createProxyMiddleware({
         target: process.env.REVIEW_SERVICE_URL,
+        pathRewrite: { "^/api/review": "" },
         changeOrigin: true,
     })
     
@@ -39,6 +41,7 @@ app.use(
     "/api/ai",
     createProxyMiddleware({
         target: process.env.AI_SERVICE_URL,
+        pathRewrite: { "^/api/ai": "" },
         changeOrigin: true,
 
         
@@ -49,6 +52,7 @@ app.use(
     "/api",
     createProxyMiddleware({
         target: process.env.BUSINESS_SERVICE_URL,
+        pathRewrite: { "^/api": "" },
         changeOrigin: true,
     })
     
