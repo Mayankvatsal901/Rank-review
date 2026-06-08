@@ -4,73 +4,41 @@ const bcrypt=require('bcryptjs')
 
 
 const RegisterBusiness = async (req, res) => {
-  console.log(req.body);
-
+    console.log(req.body);
     try {
+        const { name, slug, email, password, location, googleLink } = req.body;
 
-        const {
-            name,
-            slug,
-            email,
-            password,
-            location,
-            googleLink
-        } = req.body;
-
-        // CHECK ALL FIELDS
-        if (
-            !name ||
-            !slug ||
-            !email ||
-            !password ||
-            !location ||
-            !googleLink
-        ) {
-
+        if (!name || !slug || !email || !password || !location || !googleLink) {
             return res.status(400).json({
                 status: false,
                 message: "Give full information"
             });
         }
 
-        // CHECK EXISTING BUSINESS
-        if(slug!=null){
+        // FIX: declare outside, no need for the if(slug!=null) check
         const existingBusiness = await Business.findOne({
             $or: [{ slug }, { email }]
         });
-      }
 
         if (existingBusiness) {
-
             return res.status(400).json({
                 status: false,
                 message: "Business already exists"
             });
         }
 
-        // HASH PASSWORD
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // CREATE BUSINESS
         const business = await Business.create({
-            name,
-            slug,
-            email,
+            name, slug, email,
             password: hashedPassword,
-            location,
-            googleLink
+            location, googleLink
         });
 
-        // GENERATE JWT TOKEN
         const token = jwt.sign(
-            {
-                id: business._id,
-                email: business.email
-            },
+            { id: business._id, email: business.email },
             process.env.JWT_SECRET,
-            {
-                expiresIn: "7d"
-            }
+            { expiresIn: "7d" }
         );
 
         res.status(201).json({
@@ -80,15 +48,12 @@ const RegisterBusiness = async (req, res) => {
         });
 
     } catch (error) {
-
         res.status(500).json({
             status: false,
             message: error.message
         });
     }
-} 
-
-
+}
 
 
 const UpdateBusiness = async (req, res) => {
