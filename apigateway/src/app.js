@@ -6,6 +6,10 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 const app = express();
 app.use(cors());
 
+app.get("/health", (req, res) => {
+    res.status(200).send("UP");
+});
+
 app.get("/", (req, res) => {
     res.send("Api gateway running");
 });

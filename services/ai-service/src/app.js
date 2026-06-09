@@ -13,6 +13,10 @@ app.get("/", (req, res) => {
     res.send("AI Service Running");
 });
 
+app.get("/health", (req, res) => {
+    res.status(200).send("UP");
+});
+
 
 app.use("/", AIRouter);
 

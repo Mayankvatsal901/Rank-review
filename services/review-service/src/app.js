@@ -14,6 +14,9 @@ app.use(express.json());
 connect();
 
 app.use("/",ReviewRouter);
+app.get("/health", (req, res) => {
+    res.status(200).send("UP");
+});
 
 app.get("/", (req, res) => {
     res.send("Business Service Running");

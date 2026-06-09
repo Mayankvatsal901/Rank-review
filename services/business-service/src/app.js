@@ -41,6 +41,9 @@ app.use(passport.initialize());
 app.use("/", BusinessRouter);
 
 app.use("/payment", Payment);
+app.get("/health", (req, res) => {
+    res.status(200).send("UP");
+});
 
 app.get("/", (req, res) => {
     res.send("Business Service Running");
