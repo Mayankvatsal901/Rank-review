@@ -34,7 +34,7 @@ function ReviewPage() {
             try {
 
                 const response = await axios.get(
-                    `${Baseurl}/business/getfeature/${slug}`
+                    `${import.meta.env.VITE_REVIEW_URL}/business/getfeature/${slug}`
                 );
 
                 const businessData = response.data.information;
