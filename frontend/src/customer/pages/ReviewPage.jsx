@@ -78,7 +78,7 @@ function ReviewPage() {
             setCopied(false);
 
             const response = await axios.post(
-                `${Baseurl}/ai/generate`,
+                `${import.meta.env.VITE_AI_URL}/ai/generate`,
                 {
                     review: Reqdata.originalReview,
                     location: Reqdata.location,
