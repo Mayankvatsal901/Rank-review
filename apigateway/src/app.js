@@ -2,18 +2,22 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 dotenv.config();
-
 const { createProxyMiddleware } = require("http-proxy-middleware");
-
 const app = express();
-
 app.use(cors());
-// app.use(express.json())
 
 app.get("/", (req, res) => {
     res.send("Api gateway running");
 });
 
+// Google OAuth - direct browser redirect, cannot be proxied
+app.get("/api/business/google", (req, res) => {
+    res.redirect(`${process.env.BUSINESS_SERVICE_URL}/google`);
+});
+
+app.get("/api/business/google/callback", (req, res) => {
+    res.redirect(`${process.env.BUSINESS_SERVICE_URL}/google/callback?${new URLSearchParams(req.query)}`);
+});
 
 app.use(
     "/api/business",
@@ -21,22 +25,18 @@ app.use(
         target: process.env.BUSINESS_SERVICE_URL,
         changeOrigin: true,
         pathRewrite: { "^/api/business": "" },
-         followRedirects: true, 
         logLevel: "debug"
+        // NO followRedirects
     })
 );
-
-
 
 app.use(
     "/api/review",
     createProxyMiddleware({
         target: process.env.REVIEW_SERVICE_URL,
         pathRewrite: { "^/api/review": "" },
-        followRedirects: true, 
         changeOrigin: true,
     })
-    
 );
 
 app.use(
@@ -44,25 +44,11 @@ app.use(
     createProxyMiddleware({
         target: process.env.AI_SERVICE_URL,
         pathRewrite: { "^/api/ai": "" },
-        followRedirects: true, 
         changeOrigin: true,
-
-        
     })
 );
 
-// app.use(
-//     "/api",
-//     createProxyMiddleware({
-//         target: process.env.BUSINESS_SERVICE_URL,
-//         pathRewrite: { "^/api": "" },
-//         changeOrigin: true,
-//     })
-    
-// );
-
 const PORT = process.env.PORT || 5000;
-
 app.listen(PORT, () => {
     console.log(`server started at ${PORT}`);
 });
