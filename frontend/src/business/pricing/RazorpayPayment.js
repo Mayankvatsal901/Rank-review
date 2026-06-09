@@ -12,7 +12,7 @@ export const handlePayment = async (
     const orderResponse =
       await axios.post(
 
-        `${backendUrl}/payment/create-order`,
+        `${import.meta.env.VITE_PRICE_URL}/payment/create-order`,
 
         {
           plan
@@ -56,7 +56,7 @@ export const handlePayment = async (
         const verifyResponse =
           await axios.post(
 
-            `${backendUrl}/payment/verify`,
+            `${import.meta.env.VITE_PRICE_URL}/payment/verify`,
 
             {
 

@@ -17,7 +17,7 @@ const changePlan = async (
         const response =
         await axios.post(
 
-            `${backendUrl}/payment/change-plan`,
+            `${import.meta.env.VITE_PRICE_URL}/payment/change-plan`,
 
             {
                 plan
