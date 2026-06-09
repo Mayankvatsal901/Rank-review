@@ -47,6 +47,14 @@ app.use(
         changeOrigin: true,
     })
 );
+app.use(
+    "/api/payment",
+    createProxyMiddleware({
+        target: process.env.BUSINESS_SERVICE_URL,
+        changeOrigin: true,
+        pathRewrite: { "^/api/payment": "/payment" },
+    })
+);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
